@@ -1,6 +1,7 @@
 package com.dailycodework.dream_shops.service.product;
 
 import com.dailycodework.dream_shops.exceptions.ProductNotFoundException;
+import com.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dream_shops.model.Category;
 import com.dailycodework.dream_shops.model.Product;
 import com.dailycodework.dream_shops.repository.CategoryRepository;
@@ -46,7 +47,7 @@ public class ProductService implements IProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product Not Found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product Not Found!"));
     }
 
     @Override
