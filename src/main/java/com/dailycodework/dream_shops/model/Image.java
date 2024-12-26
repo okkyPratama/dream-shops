@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Blob;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,7 +20,9 @@ public class Image {
     private String fileType;
 
     @Lob
-    private Blob image;
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] image;
+
     private String downloadUrl;
 
     @ManyToOne
