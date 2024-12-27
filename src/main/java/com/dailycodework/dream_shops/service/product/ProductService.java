@@ -2,6 +2,7 @@ package com.dailycodework.dream_shops.service.product;
 
 import com.dailycodework.dream_shops.dto.ImageDto;
 import com.dailycodework.dream_shops.dto.ProductDto;
+import com.dailycodework.dream_shops.exceptions.AlreadyExistsException;
 import com.dailycodework.dream_shops.exceptions.ProductNotFoundException;
 import com.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dream_shops.model.Category;
@@ -30,6 +31,10 @@ public class ProductService implements IProductService {
     @Override
     public Product addProduct(AddProductRequest request) {
 
+        if (productExists(request.getName(), request.getBrand())) {
+            throw new AlreadyExistsException(request.getBrand() + " " + request.getName() + " already exists, you may update this product instead!");
+        }
+
         Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
                 .orElseGet(() -> {
                     Category newCategory = new Category(request.getCategory().getName());
@@ -37,6 +42,10 @@ public class ProductService implements IProductService {
                 });
         request.setCategory(category);
         return productRepository.save(createproduct(request, category));
+    }
+
+    private boolean productExists(String name, String brand) {
+        return productRepository.existsByNameAndBrand(name, brand);
     }
 
     private Product createproduct(AddProductRequest request, Category category) {
@@ -124,6 +133,7 @@ public class ProductService implements IProductService {
     public List<ProductDto> getConvertedProducts(List<Product> products) {
         return products.stream().map(this::convertToDto).toList();
     }
+
     @Override
     public ProductDto convertToDto(Product product) {
         ProductDto productDto = modelMapper.map(product, ProductDto.class);
