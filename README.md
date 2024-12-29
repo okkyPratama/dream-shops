@@ -39,7 +39,7 @@ com.dailycodework.dream_shops/
 ```
 
 ## Database Schema
-![dream-shops-erd.png](..%2F..%2F..%2FProjects%2Fdream-shops%2Fsrc%2Fmain%2Fresources%2Fstatic%2Fdream-shops-erd.png)
+![dream-shops-erd.png](https://github.com/okkyPratama/dream-shops/blob/main/src/main/resources/static/dream-shops-erd.png?raw=true)
 
 ## API Endpoints
 
